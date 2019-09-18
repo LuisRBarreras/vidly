@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getMovies, deleteMovie } from "../services/fakeMovieService";
+import { getMovies } from "../services/fakeMovieService";
 
 class Movies extends Component {
   state = {
@@ -7,8 +7,8 @@ class Movies extends Component {
   };
 
   handleDelete = movie => {
-    deleteMovie(movie._id);
-    this.setState({ movies: getMovies() });
+    const movies = this.state.movies.filter(m => m._id !== movie._id);
+    this.setState({ movies });
   };
 
   renderMovie = movie => {
@@ -20,7 +20,7 @@ class Movies extends Component {
         <td>{movie.dailyRentalRate}</td>
         <td>
           <button
-            className="btn btn-danger"
+            className="btn btn-danger btn-sm"
             onClick={() => {
               this.handleDelete(movie);
             }}
@@ -32,15 +32,13 @@ class Movies extends Component {
     );
   };
 
-  formatSummary = () => {
-    if (this.state.movies.length === 0) return <p> There are no movies</p>;
-    return <p>'howing {this.state.movies.length} in the database</p>;
-  };
-
   render() {
+    const { length: count } = this.state.movies;
+    if (count === 0) return <p> There are no movies in the database.</p>;
     return (
-      <div>
-        <div>{this.formatSummary()}</div>
+      <React.Fragment>
+        <p>Showing {count} in the database.</p>
+
         <table className="table">
           <thead>
             <tr>
@@ -55,7 +53,7 @@ class Movies extends Component {
             {this.state.movies.map(movie => this.renderMovie(movie))}
           </tbody>
         </table>
-      </div>
+      </React.Fragment>
     );
   }
 }
