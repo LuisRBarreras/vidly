@@ -1,37 +1,34 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-class ListGroup extends Component {
-  state = {};
-  render() {
-    const { currentGenre } = this.props;
+const ListGroup = props => {
+  const {
+    items,
+    textProperty,
+    valueProperty,
+    onItemSelect,
+    selectedItem
+  } = props;
+  return (
+    <ul className="list-group">
+      {items.map(item => (
+        <li
+          onClick={() => onItemSelect(item)}
+          key={item[valueProperty]}
+          className={
+            item === selectedItem ? "list-group-item active" : "list-group-item"
+          }
+        >
+          {item[textProperty]}
+        </li>
+      ))}
+    </ul>
+  );
+};
 
-    return (
-      <ul className="list-group">
-        {this.props.genres.map(genre => {
-          return (
-            <li
-              className={
-                genre.name === currentGenre.name
-                  ? "list-group-item active"
-                  : "list-group-item"
-              }
-              key={genre._id}
-              onClick={() => this.props.onGenreChange(genre)}
-            >
-              {genre.name}
-            </li>
-          );
-        })}
-      </ul>
-    );
-  }
-}
-
-ListGroup.propTypes = {
-  genres: PropTypes.array.isRequired,
-  onGenreChange: PropTypes.func.isRequired,
-  currentGenre: PropTypes.object.isRequired
+ListGroup.defaultProps = {
+  textProperty: "name",
+  valueProperty: "_id"
 };
 
 export default ListGroup;
