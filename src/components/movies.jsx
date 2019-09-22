@@ -1,16 +1,9 @@
 import React, { Component } from "react";
-import { getMovies } from "../services/fakeMovieService";
+import Like from "./common/like";
+import Pagination from "./common/pagination";
+import { paginate } from "../utils/paginate";
 
 class Movies extends Component {
-  state = {
-    movies: getMovies()
-  };
-
-  handleDelete = movie => {
-    const movies = this.state.movies.filter(m => m._id !== movie._id);
-    this.setState({ movies });
-  };
-
   renderMovie = movie => {
     return (
       <tr key={movie._id}>
@@ -19,10 +12,13 @@ class Movies extends Component {
         <td>{movie.numberInStock}</td>
         <td>{movie.dailyRentalRate}</td>
         <td>
+          <Like liked={movie.liked} onClick={() => this.props.onLike(movie)} />
+        </td>
+        <td>
           <button
             className="btn btn-danger btn-sm"
             onClick={() => {
-              this.handleDelete(movie);
+              this.props.onDelete(movie);
             }}
           >
             Delete
@@ -33,8 +29,12 @@ class Movies extends Component {
   };
 
   render() {
-    const { length: count } = this.state.movies;
+    const { length: count } = this.props.movies;
+    const { pageSize, currentPage, movies: allMovies } = this.props;
     if (count === 0) return <p> There are no movies in the database.</p>;
+
+    const movies = paginate(allMovies, currentPage, pageSize);
+
     return (
       <React.Fragment>
         <p>Showing {count} in the database.</p>
@@ -47,12 +47,17 @@ class Movies extends Component {
               <th scope="col">Stock</th>
               <th scope="col">Rate</th>
               <th scope="col"></th>
+              <th scope="col"></th>
             </tr>
           </thead>
-          <tbody>
-            {this.state.movies.map(movie => this.renderMovie(movie))}
-          </tbody>
+          <tbody>{movies.map(movie => this.renderMovie(movie))}</tbody>
         </table>
+        <Pagination
+          itemsCount={count}
+          pageSize={pageSize}
+          currentPage={currentPage}
+          onPageChange={this.props.onPageChange}
+        />
       </React.Fragment>
     );
   }
