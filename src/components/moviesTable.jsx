@@ -6,7 +6,6 @@ import Like from "./common/like";
 class MoviesTable extends Component {
   columns = [
     {
-      key: "id",
       label: "Title",
       content: movie => <Link to={`/movies/${movie._id}`}>{movie.title}</Link>
     },
