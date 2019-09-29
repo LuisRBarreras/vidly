@@ -83,7 +83,7 @@ export function getMovies() {
 export function getMovie(id) {
   return movies.find(m => m._id === id);
 }
-
+//2 bug on this file
 export function saveMovie(movie) {
   let movieInDb = movies.find(m => m._id === movie._id) || {};
   movieInDb.name = movie.name;

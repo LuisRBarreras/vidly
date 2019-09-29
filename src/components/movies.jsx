@@ -66,6 +66,9 @@ class Movies extends Component {
 
     return { totalCount: filtered.length, data: movies };
   };
+  handleOnClick = () => {
+    this.props.history.push("/movies/new");
+  };
 
   render() {
     const { length: count } = this.state.movies;
@@ -86,6 +89,9 @@ class Movies extends Component {
         </div>
         <div className="col">
           <p>Showing {totalCount} in the database.</p>
+          <button className="btn btn-primary" onClick={this.handleOnClick}>
+            New Movie
+          </button>
           <MoviesTable
             movies={movies}
             sortColumn={sortColumn}

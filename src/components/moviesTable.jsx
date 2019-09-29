@@ -7,6 +7,7 @@ class MoviesTable extends Component {
   columns = [
     {
       label: "Title",
+      key: "title",
       content: movie => <Link to={`/movies/${movie._id}`}>{movie.title}</Link>
     },
     { path: "genre.name", label: "Genre" },
@@ -32,6 +33,7 @@ class MoviesTable extends Component {
       )
     }
   ];
+
   render() {
     const { movies, onSort, sortColumn } = this.props;
     return (
