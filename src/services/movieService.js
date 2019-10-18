@@ -1,4 +1,7 @@
 import * as genresAPI from "./fakeGenreService";
+import http from "./httpService";
+import config from "../config.json";
+
 
 const movies = [
   {
@@ -76,7 +79,8 @@ const movies = [
   }
 ];
 
-export function getMovies() {
+export async function getMovies() {
+  const { data: movies } = await http.get(`${config.apiEndpoint}/api/movies`);
   return movies;
 }
 

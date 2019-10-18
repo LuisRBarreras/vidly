@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Movies from "./components/movies";
 import MovieForm from "./components/movieForm"
 import Customers from "./components/customers";
 import Rentals from "./components/rentals";
-import NavBar from './components/navBar';
-import NotFound from './components/notFound';
-import LoginForm from './components/loginForm';
-import RegisterForm from './components/registerForm';
-import './App.css';
+import NavBar from "./components/navBar";
+import NotFound from "./components/notFound";
+import LoginForm from "./components/loginForm";
+import RegisterForm from "./components/registerForm";
+import "./App.css";
 
 class App extends Component {
 

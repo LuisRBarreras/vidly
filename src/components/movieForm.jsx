@@ -1,8 +1,8 @@
 import React from "react";
 import Form from "./common/form";
 import Joi from "joi-browser";
-import { getGenres } from "../services/fakeGenreService";
-import { saveMovie, getMovie } from "../services/fakeMovieService";
+import { getGenres } from "../services/genreService";
+import { saveMovie, getMovie } from "../services/movieService";
 
 class MovieForm extends Form {
   state = {
@@ -35,8 +35,8 @@ class MovieForm extends Form {
       .required()
       .label("Daily Rental Rate")
   };
-  componentDidMount() {
-    const genresOptions = getGenres();
+  async componentDidMount() {
+    const genresOptions = await getGenres();
     this.setState({ genresOptions });
     const movieId = this.props.match.params.id;
 
